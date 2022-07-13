@@ -25,7 +25,7 @@ File lists:
 - globals.py 
 - run_scripts.py
 
-The result of the calculation with *run_scripts.py* is a number of txt files (one per detector (sub)system) containing the information on the location (x, y, z coordinates with respect to the sample position at (0, 0, 0)) and shape parameters (trapezoidal) of each individual detector voxel along with some hardware information (wire number, strip number, segment number, module number) that will make it possible to match the calculated detector voxels to the real ones (when available). The number of Mantle and EndCap detector modules included in the calculation can be controled from the *globals.py* file. The file *DREAMAll_voxel.txt* is obtained through the concatanation of the (sub)system files and it is used by the script *dream.py* to generate the off- and nxs-files of the DREAM detector. 
+The result of the calculation with *run_scripts.py* is a number of txt files (one per detector (sub)system) containing the information on the location (x, y, z coordinates with respect to the sample position at (0, 0, 0)) and shape parameters (trapezoidal) of each individual detector voxel along with some hardware information (wire number, strip number, segment number, module number) that will make it possible to match the calculated detector voxels to the real ones (when available). The number of Mantle and EndCap detector modules included in the calculation can be controled from the *globals.py* file. The file *DREAMAll_voxels.txt* is obtained through the concatanation of the (sub)system files and it is used by the script *dream.py* to generate the off- and nxs-files of the DREAM detector. 
 
 ## Installation and usage
 
