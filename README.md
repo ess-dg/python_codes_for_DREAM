@@ -2,14 +2,16 @@
 contains python scripts to generate the voxel table for the DREAM detectors
 
 Scripts written by Irina Stefanescu, ESS NSS Detector Group and Celine Durniak, ESS DMSC DRAM Group
+
 irina.stefanescu@ess.eu
+
 celine.durniak@ess.eu
 
 ## Description
 
 **To be completed**
 
-One Python script per detectors' part ,i.e., SUMO3, 4, 5 ,6, Mantle, High-resolution 
+One Python script per detectors' part ,i.e., EndCap FORWARD (SUMO3, SUMO4, SUMO5, SUMO6), EndCap BACKWARD (SUMO3, SUMO4, SUMO5, SUMO6), Mantle, High-resolution.  
 
 File lists:
 
