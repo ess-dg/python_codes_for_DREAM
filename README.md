@@ -5,7 +5,7 @@ contains python scripts to generate the voxel table for the DREAM detectors
 
 irina.stefanescu@ess.eu
 
-celine.durniak.ess.eu
+celine.durniak@ess.eu
 
 ## Description
 
