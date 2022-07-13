@@ -1,13 +1,14 @@
 # python_codes_for_DREAM
 contains python scripts to generate the voxel table for the DREAM detectors
 
-# Codes written by Irina Stefanescu, ESS NSS Detector Group and Celine Durniak, ESS DMSC DRAM Group
+Scripts written by Irina Stefanescu, ESS NSS Detector Group and Celine Durniak, ESS DMSC DRAM Group
 irina.stefanescu@ess.eu
 celine.durniak@ess.eu
 
 ## Description
 
 **To be completed**
+
 One Python script per detectors' part ,i.e., SUMO3, 4, 5 ,6, Mantle, High-resolution 
 
 File lists:
