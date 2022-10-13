@@ -324,8 +324,8 @@ mX_c = np.cos(np.deg2rad(tilt_phiS3))
 fY_s = np.sin(np.deg2rad(180))
 fY_c = np.cos(np.deg2rad(180))
 
-fZ_s = np.sin(np.deg2rad(180))
-fZ_c = np.cos(np.deg2rad(180))
+fZ_s = np.sin(np.deg2rad(90))
+fZ_c = np.cos(np.deg2rad(90))
 
 # voxels in the left counter
 
