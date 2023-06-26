@@ -66,11 +66,11 @@ except FileNotFoundError:
     print(f"Old file {tempHR_file} not found. Creating it during this run.\n")
     pass
 
-os.system(f'python DREAMMantle_calculate_voxels.py {tempM_file}')
-print('Mantle done!\n') 
+#os.system(f'python DREAMMantle_calculate_voxels.py {tempM_file}')
+#print('Mantle done!\n') 
 
-os.system(f'python DREAMHR_calculate_voxels.py {tempHR_file}')
-print('High-Resolution done!\n') 
+#os.system(f'python DREAMHR_calculate_voxels.py {tempHR_file}')
+#print('High-Resolution done!\n') 
 
 os.system('python DREAMSUMO3_calculate_voxels.py')
 print('SUMO3 Backward & SUMO3 Forward done!\n')
@@ -82,3 +82,4 @@ os.system('python DREAMSUMO6_calculate_voxels.py')
 print('SUMO6 Backward & SUMO6 Forward done!\n')
 
 os.system(f'cat {tempM_file} {tempHR_file} {tempB_file} {tempF_file} > {out_file}')
+#os.system(f'cat {tempB_file} {tempF_file} > {out_file}')

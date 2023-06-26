@@ -428,7 +428,7 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip] * fY_c - \
                     VX[md_segt_id, wire, strip] * fY_s
 
-                # Forward detector, rotation around Z-axis by 180 deg
+                # Forward detector, rotation around Z-axis by 90 deg
                 VXF[md_segt_id, wire, strip] = \
                     XF[md_segt_id, wire, strip] * fZ_c - \
                     YF[md_segt_id, wire, strip] * fZ_s
@@ -453,13 +453,14 @@ for md in range(no_modules):
                     13, 1, md + 1, segment + 1, wire + 1, strip + 1, 1
                 )
 
-                # Legend: x,y,z voxel centers
+                # Legend: x,y,z voxel centers Backward EndCap
                 temp1 = '%.2f\t%.2f\t%.2f' % (
                     VX[md_segt_id, wire, strip],
                     VY[md_segt_id, wire, strip],
                     VZ[md_segt_id, wire, strip]
                 )
 
+                # Legend: x,y,z voxel centers Forward EndCap
                 tempF1 = '%.2f\t%.2f\t%.2f' % (
                     VXF[md_segt_id, wire, strip],
                     VYF[md_segt_id, wire, strip],
@@ -476,12 +477,15 @@ for md in range(no_modules):
                     2 * GLy2S3[wire, strip],
                     2 * GLzS3[wire, strip])
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS3, angM, 0
+                # Legend:
+                # rotation angles to put the voxels into the right positions, Backward EndCap
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS3, angM, 0, 0, 0, 0
                 )
 
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS3, angM, 180
+                # rotation angles to put the voxels into the right positions, Forward EndCap 
+                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS3, angM, 180, 90, 0, 0
                 )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
@@ -634,12 +638,15 @@ for md in range(no_modules):
                     2 * GLy2S3[wire, strip],
                     2 * GLzS3[wire, strip])
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS3, angM, 0
+                # Legend:
+                # rotation angles to put the voxels into the right positions, Backward EndCap
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS3, angM, 0, 0, 0, 0
                 )
 
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS3, angM, 180
+                # rotation angles to put the voxels into the right positions, Forward EndCap
+                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS3, angM, 180, 90, 0, 0
                 )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3

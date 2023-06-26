@@ -467,11 +467,16 @@ for md in range(no_modules):
                     2 * GLy2S6[wire, strip],
                     2 * GLzS6[wire, strip])
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS6, angM, 0)
+                # Legend:
+                # rotation angles to put the voxels into the right positions, Backward EndCap
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS6, angM, 0, 0, 0, 0
+                    )
 
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS6, angM, 180)
+                # rotation angles to put the voxels into the right positions, Forward EndCap
+                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS6, angM, 180, 90, 0, 0
+                    )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
                 stringaf = tempF + '\t' + tempF1 + '\t' + temp2 + '\t' + tempF3
@@ -626,12 +631,15 @@ for md in range(no_modules):
                     2 * GLy2S6[wire, strip],
                     2 * GLzS6[wire, strip])
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS6, angM, 0
+                # Legend:
+                # rotation angles to put the voxels into the right positions, Backward EndCap
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS6, angM, 0, 0, 0, 0
                 )
 
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    angY, angZ, -tilt_theta, tilt_phiS6, angM, 180
+                # rotation angles to put the voxels into the right positions, Forward EndCap
+                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    -angY, angZ, -tilt_theta, tilt_phiS6, angM, 180, 90, 0, 0
                 )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3

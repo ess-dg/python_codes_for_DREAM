@@ -348,6 +348,7 @@ def create_sector(
             [
                 [geant_df["rxx"][voxel], geant_df["rxy"][voxel], geant_df["rxz"][voxel]],
                 [geant_df["ryx"][voxel], geant_df["ryy"][voxel], geant_df["ryz"][voxel]],
+                [geant_df["rzx"][voxel], geant_df["rzy"][voxel], geant_df["rzz"][voxel]],
             ]
         )
 
@@ -358,15 +359,18 @@ def create_sector(
 
         for vert_number, vertex in enumerate(voxel_vertices):
             # Rotate voxel to final position, added by IS
+            # detector_number = 7 is Mantle
             if detector_number[voxel] == 7:
                 vertex = rotate_around_y(voxel_rotation[0, 0], vertex)
                 vertex = rotate_around_z(voxel_rotation[0, 1], vertex)
                 vertex = rotate_around_z(voxel_rotation[0, 2], vertex)
+            # detector_number = 8 is High-Resolution detector
             elif detector_number[voxel] == 8:
                 vertex = rotate_around_z(voxel_rotation[0, 0], vertex)
                 vertex = rotate_around_x(voxel_rotation[0, 1], vertex)
                 vertex = rotate_around_y(voxel_rotation[0, 2], vertex)
                 vertex = rotate_around_z(voxel_rotation[1, 0], vertex)
+            # EndCap Backward (det_num = 3-6) and Forward (13-16)
             else:
                 # vertex = rotate_around_y(0, vertex)
                 vertex = rotate_around_y(voxel_rotation[0, 0], vertex)
@@ -375,7 +379,7 @@ def create_sector(
                 vertex = rotate_around_x(voxel_rotation[1, 0], vertex)
                 vertex = rotate_around_z(voxel_rotation[1, 1], vertex)
                 vertex = rotate_around_y(voxel_rotation[1, 2], vertex)
-                vertex = rotate_around_z(voxel_rotation[1, 2], vertex)
+                vertex = rotate_around_z(voxel_rotation[2, 0], vertex)
 
             vertex += voxel_position
 
@@ -426,7 +430,7 @@ def create_sector(
 
 if __name__ == "__main__":
     df = pd.read_csv(
-        "/Users/irinastefanescu/g4new/ess/DREAM/python/DreamAll_voxels.txt",
+        "/Users/irinastefanescu/g4new/DREAM_cluster/python/Celine_corrections_and_github/DreamAll_voxels.txt",
         delim_whitespace=True,
         header=None
     )
@@ -453,6 +457,9 @@ if __name__ == "__main__":
         "ryx",
         "ryy",
         "ryz",
+        "rzx",
+        "rzy",
+        "rzz",
     ]
 
     faces_in_voxel = 6
