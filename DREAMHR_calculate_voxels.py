@@ -287,8 +287,8 @@ with open('HR_temp.txt', "a") as f:
                             2 * GLyHR,
                             2 * GLzHR)
 
-                        temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                            angZ, -angX, -angY, shr_angle[sec], 0, 0
+                        temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                            angZ, -angX, -angY, shr_angle[sec], 0, 0, 0, 0, 0
                         )
                         stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
                         f.writelines(stringa)
@@ -402,8 +402,8 @@ with open('HR_temp.txt', "a") as f:
                             2 * GLyHR,
                             2 * GLzHR)
 
-                        temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                            angZ, -angX, -angY, shr_angle[sec], 0, 0
+                        temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                            angZ, -angX, -angY, shr_angle[sec], 0, 0, 0, 0, 0
                         )
 
                         stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3

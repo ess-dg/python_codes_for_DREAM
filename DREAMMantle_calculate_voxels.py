@@ -304,8 +304,9 @@ for md in range(no_modulesM):
                     GLy1[strip, wire],
                     GLy2[strip, wire],
                     2*GLz[strip, wire])
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    90, angM, ang, 0, 0, 0)
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    90, angM, ang, 0, 0, 0, 0, 0, 0
+                    )
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
                 f.writelines(stringa)
 
@@ -382,8 +383,8 @@ for md in range(no_modulesM):
                     GLy2[strip, wire],
                     2 * GLz[strip, wire]
                     )
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    90, angM, ang, 0, 0, 0
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    90, angM, ang, 0, 0, 0, 0, 0, 0
                     )
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
                 f.writelines(stringa)
@@ -455,8 +456,8 @@ for md in range(no_modulesM):
                     2 * GLz[strip, wire]
                     )
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    90, angM, ang, 0, 0, 0
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    90, angM, ang, 0, 0, 0, 0, 0, 0
                     )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
@@ -534,8 +535,8 @@ for md in range(no_modulesM):
                     2 * GLz[strip, wire]
                     )
 
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    90, angM, ang, 0, 0, 0
+                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                    90, angM, ang, 0, 0, 0, 0, 0, 0
                     )
 
                 stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
