@@ -60,3 +60,6 @@ The result of the calculation with *run_scripts.py* is a number of txt files (on
   
 - To deactivate the virtual environment, simply type `deactivate` in the terminal. The prompt should change back to 
   its initial state. And if you do not need this environment, you can simply delete the `.venv` folder.0
+
+
+see here the result of the calculation: https://github.com/ess-dg/python_codes_for_DREAM/wiki
