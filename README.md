@@ -11,7 +11,8 @@ celine.durniak@ess.eu
 
 **To be completed**
 
-One Python script per detectors' part ,i.e., EndCap FORWARD (SUMO3, SUMO4, SUMO5, SUMO6), EndCap BACKWARD (SUMO3, SUMO4, SUMO5, SUMO6), Mantle, High-resolution.  
+One Python script per detectors' part ,i.e., EndCap FORWARD (SUMO3, SUMO4, SUMO5, SUMO6), EndCap 
+BACKWARD (SUMO3, SUMO4, SUMO5, SUMO6), Mantle, High-resolution.  
 
 File lists:
 
@@ -25,7 +26,15 @@ File lists:
 - globals.py 
 - run_scripts.py
 
-The result of the calculation with *run_scripts.py* is a number of txt files (one per detector (sub)system) containing the information on the location (x, y, z coordinates with respect to the sample position at (0, 0, 0)) and shape parameters (trapezoidal) of each individual detector voxel along with some hardware information (wire number, strip number, segment number, module number) that will make it possible to match the calculated detector voxels to the real ones (when available). The number of Mantle and EndCap detector modules included in the calculation can be controled from the *globals.py* file. The file *DREAMAll_voxels.txt* is obtained through the concatanation of the (sub)system files and it is used by the script *dream.py* to generate the off- and nxs-files of the DREAM detector. 
+The result of the calculation with *run_scripts.py* is a number of txt files (one per detector 
+(sub)system) containing the information on the location (x, y, z coordinates with respect to the 
+sample position at (0, 0, 0)) and shape parameters (trapezoidal) of each individual detector voxel 
+along with some hardware information (wire number, strip number, segment number, module number) 
+that will make it possible to match the calculated detector voxels to the real ones 
+(when available). The number of Mantle and EndCap detector modules included in the calculation 
+can be controlled from the *globals.py* file. The file *DREAMAll_voxels.txt* is obtained through 
+the concatenation of the (sub)system files and it is used by the script *dream.py* to generate the 
+off- and nxs-files of the DREAM detector. 
 
 ## Installation and usage
 
@@ -37,7 +46,8 @@ The result of the calculation with *run_scripts.py* is a number of txt files (on
    python -m venv .venv
    source .venv/bin/activate
    ```
-   Executing this last command should change the prompt of your terminal. It should now starts with `(.venv)`. 
+   Executing this last command should change the prompt of your terminal. It should now start 
+   with `(.venv)`. 
 
 - Upgrade pip (optional)
 
@@ -58,8 +68,9 @@ The result of the calculation with *run_scripts.py* is a number of txt files (on
   ```
   You can comment out the tables not needed for your studies before running the above command.
   
-- To deactivate the virtual environment, simply type `deactivate` in the terminal. The prompt should change back to 
-  its initial state. And if you do not need this environment, you can simply delete the `.venv` folder.0
+- To deactivate the virtual environment, simply type `deactivate` in the terminal. The prompt 
+  should change back to its initial state. And if you do not need this environment, you can simply 
+  delete the `.venv` folder.
 
 
 see here the result of the calculation: https://github.com/ess-dg/python_codes_for_DREAM/wiki

@@ -10,7 +10,6 @@ import numpy as np
 import sys
 import globals
 
-globals.initialize()
 
 np.set_printoptions(precision=4)
 
@@ -35,7 +34,7 @@ data is in mm
 
 """*******User parameters ************************"""
 
-# no_modulesM = 10  # no of modules in the frame
+no_modulesM = globals.no_modulesM  # no of modules in the frame
 
 """**************************"""
 
@@ -200,8 +199,6 @@ for seg_no in range(nM):
     segY[seg_no] = dist_det * np.sin(seg_no * st_angle)
 
 
-no_modulesM = globals.no_modulesM
-
 # calculate the lookup table
 shp = (100 * no_modulesM + nM, n_wiresM, n_stripsM//2)
 
@@ -265,7 +262,7 @@ for md in range(no_modulesM):
                     segY[segment] + voxelXXM[wire] * segZ_s \
                     + (-voxelYYM[wire] * 0.25 + voxelYu) * segZ_c
 
-                szM[md_segt_id, wire, strip] = - voxelZZM[strip, wire]
+                szM[md_segt_id, wire, strip] = -voxelZZM[strip, wire]
 
                 # rotation of the whole module by angM around the Z-axis
                 mxM[md_segt_id, wire, strip] = \
@@ -418,7 +415,7 @@ for md in range(no_modulesM):
                 syM[md_segt_id, wire, strip] = \
                     segY[segment] + voxelXXM[wire] * segZ_s \
                     + (voxelYYM[wire] * 0.25 - voxelYd) * segZ_c
-                szM[md_segt_id, wire, strip] = - voxelZZM[strip, wire]
+                szM[md_segt_id, wire, strip] = -voxelZZM[strip, wire]
 
                 # rotation of the whole module by angM around the Z-axis
                 mxM[md_segt_id, wire, strip] = \
