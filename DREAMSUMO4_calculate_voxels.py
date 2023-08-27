@@ -52,7 +52,7 @@ Bthick = 0.0011   # thickness Boron coating
 
 # start position for placing the modules in the frame, integer number
 # to multiply with 12*deg
-index_rot = 10
+index_rot = 6
 
 tilt_theta = -10       # tilt_angle in deg
 tilt_phiS4 = 16        # inclination angle module in deg
@@ -413,16 +413,16 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip] * fY_c - \
                     VX[md_segt_id, wire, strip] * fY_s
 
-                # Forward detector, rotation around Z-axis by 180 deg
-                VXF[md_segt_id, wire, strip] = \
-                    XF[md_segt_id, wire, strip] * fZ_c - \
-                    YF[md_segt_id, wire, strip] * fZ_s
+                # # Forward detector, rotation around Z-axis by 180 deg
+                # VXF[md_segt_id, wire, strip] = \
+                #     XF[md_segt_id, wire, strip] * fZ_c - \
+                #     YF[md_segt_id, wire, strip] * fZ_s
 
-                VYF[md_segt_id, wire, strip] = \
-                    XF[md_segt_id, wire, strip] * fZ_s + \
-                    YF[md_segt_id, wire, strip] * fZ_c
+                # VYF[md_segt_id, wire, strip] = \
+                #     XF[md_segt_id, wire, strip] * fZ_s + \
+                #     YF[md_segt_id, wire, strip] * fZ_c
 
-                VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
+                # VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
                     
                 # Legend:
                 # 4 = 'SUMO4 Backward', 14 = 'SUMO4 Forward'
@@ -444,10 +444,11 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip]
                 )
 
+               # Forward EndCap, mirror reflection of backward EndCap
                 tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VXF[md_segt_id, wire, strip],
-                    VYF[md_segt_id, wire, strip],
-                    VZF[md_segt_id, wire, strip]
+                    VX[md_segt_id, wire, strip],
+                    VY[md_segt_id, wire, strip],
+                    -VZ[md_segt_id, wire, strip]
                 )
 
                 # Legend:
@@ -578,16 +579,16 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip] * fY_c - \
                     VX[md_segt_id, wire, strip] * fY_s
 
-                # Forward detector, rotation around Z-axis by 90 deg
-                VXF[md_segt_id, wire, strip] = \
-                    XF[md_segt_id, wire, strip] * fZ_c - \
-                    YF[md_segt_id, wire, strip] * fZ_s
+                # # Forward detector, rotation around Z-axis by 90 deg
+                # VXF[md_segt_id, wire, strip] = \
+                #     XF[md_segt_id, wire, strip] * fZ_c - \
+                #     YF[md_segt_id, wire, strip] * fZ_s
 
-                VYF[md_segt_id, wire, strip] = \
-                    XF[md_segt_id, wire, strip] * fZ_s + \
-                    YF[md_segt_id, wire, strip] * fZ_c
+                # VYF[md_segt_id, wire, strip] = \
+                #     XF[md_segt_id, wire, strip] * fZ_s + \
+                #     YF[md_segt_id, wire, strip] * fZ_c
 
-                VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
+                # VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
                     
                 # Legend:
                 # 4 = 'SUMO4 Backward', 14 = 'SUMO4 Forward'
@@ -608,10 +609,11 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip]
                 )
 
+               # Forward EndCap, mirror reflection of backward EndCap
                 tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VXF[md_segt_id, wire, strip],
-                    VYF[md_segt_id, wire, strip],
-                    VZF[md_segt_id, wire, strip]
+                    VX[md_segt_id, wire, strip],
+                    VY[md_segt_id, wire, strip],
+                    -VZ[md_segt_id, wire, strip]
                 )
 
                 # Legend:
