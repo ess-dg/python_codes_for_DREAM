@@ -55,7 +55,7 @@ Bthick = 0.0011     # thickness Boron coating
 index_rot = 6
 
 tilt_theta = -10     # tilt_angle in deg
-tilt_phiS3 = 0      # inclination angle module in deg
+tilt_phiS3 = 10      # inclination angle module in deg
 dphi = np.deg2rad(12)   # angular coverage in phi for the whole module
 s_angle_S3 = 0.35    # rotation segment around the Y axis
 s_offset_S3 = 0.35   # additional angle for the Z rotation of the segment
