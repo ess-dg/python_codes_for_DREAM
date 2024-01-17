@@ -6,13 +6,9 @@ Created on Mon May 16 11:17:37 2022
 @author: irinastefanescu
 """
 
-
-def initialize():
-    
-    global no_modules
-    global no_modulesM
-    no_modules = 1   # no of EndCap sectors
-    no_modulesM = 10  # no of Mantle modules
+index_rot = 17
+no_modules = 23   # no of EndCap sectors
+no_modulesM = 7 # 14  # no of Mantle modules
 
 
 def match2geantvars(args):

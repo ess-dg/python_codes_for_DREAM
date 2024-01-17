@@ -1,0 +1,12 @@
+*.nxs
+*.off
+.DS_Store
+.ipynb_checkpoints/
+.idea/
+
+*.off
+*.off.zip
+
+*.txt
+*.txt.zip
+.venv

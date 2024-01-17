@@ -10,7 +10,6 @@ import numpy as np
 import sys
 import globals
 
-globals.initialize()
 
 np.set_printoptions(precision=4)
 
@@ -35,7 +34,7 @@ data is in mm
 
 """*******User parameters ************************"""
 
-# no_modulesM = 10  # no of modules in the frame
+no_modulesM = globals.no_modulesM  # no of modules in the frame
 
 """**************************"""
 
@@ -265,7 +264,7 @@ for md in range(no_modulesM):
                     segY[segment] + voxelXXM[wire] * segZ_s \
                     + (-voxelYYM[wire] * 0.25 + voxelYu) * segZ_c
 
-                szM[md_segt_id, wire, strip] = - voxelZZM[strip, wire]
+                szM[md_segt_id, wire, strip] = -voxelZZM[strip, wire]
 
                 # rotation of the whole module by angM around the Z-axis
                 mxM[md_segt_id, wire, strip] = \
@@ -284,7 +283,7 @@ for md in range(no_modulesM):
                 #     only relevant for the HR detector
                 # module no, segment no, wire no, strip no, counter no 
                 temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 - strip, 1
+                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 - strip, 2
                 )
 
                 # Legend: x,y,z voxel centers
@@ -329,9 +328,8 @@ for md in range(no_modulesM):
         for wire in range(n_wiresM):
             for strip in range(n_stripsM//2):
 
-                # rotation of each segment of the module by angM
-                # around the Z-axis followed
-                # by a translation by sin X and Y
+                # rotation of each segment of the module by angM around the
+                # Z-axis followed by a translation by sin X and Y
                 sxM[md_segt_id, wire, strip] = \
                     segX[segment] + voxelXXM[wire] * segZ_c \
                     - (-voxelYYM[wire] * 0.25 + voxelYu) * segZ_s
@@ -362,7 +360,7 @@ for md in range(no_modulesM):
                 # module no, segment no, wire no, strip no, counter no 
                 temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
                     7, 1, md + 1, segment + 1, 
-                    wire + 1, n_stripsM//2 + strip + 1, 1
+                    wire + 1, n_stripsM//2 + strip + 1, 2
                 )
 
                 # Legend: x,y,z voxel centers
@@ -418,7 +416,7 @@ for md in range(no_modulesM):
                 syM[md_segt_id, wire, strip] = \
                     segY[segment] + voxelXXM[wire] * segZ_s \
                     + (voxelYYM[wire] * 0.25 - voxelYd) * segZ_c
-                szM[md_segt_id, wire, strip] = - voxelZZM[strip, wire]
+                szM[md_segt_id, wire, strip] = -voxelZZM[strip, wire]
 
                 # rotation of the whole module by angM around the Z-axis
                 mxM[md_segt_id, wire, strip] = \
@@ -435,7 +433,7 @@ for md in range(no_modulesM):
                 #     only relevant for the HR detector
                 # module no, segment no, wire no, strip no, counter no 
                 temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 - strip, 2
+                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 - strip, 1
                 )
 
                 # Legend: x, y, z voxel centers
@@ -513,7 +511,7 @@ for md in range(no_modulesM):
                 #     only relevant for the HR detector
                 # module no, segment no, wire no, strip no, counter no 
                 temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 + strip + 1, 2
+                    7, 1, md + 1, segment + 1, wire + 1, n_stripsM//2 + strip + 1, 1
                 )
 
                 # Legend: x, y, z voxel centers

@@ -430,7 +430,7 @@ def create_sector(
 
 if __name__ == "__main__":
     df = pd.read_csv(
-        "/Users/irinastefanescu/g4new/DREAM_cluster/python/Celine_corrections_and_github/DreamAll_voxels.txt",
+        "DreamAll_voxels.txt",
         delim_whitespace=True,
         header=None
     )
