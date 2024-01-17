@@ -9,12 +9,11 @@ Created on Wed Mar 12 10:13:30 2022
 import numpy as np
 import globals
 
-globals.initialize()
 
 np.set_printoptions(precision=4)
 
 """
-*******The SUMO4 for EndCap ******
+*******The SUMO5 for EndCap ******
 
  Uses the engineering specifications from the company CDT and
  generates the centers and dimensions of the voxels for the
@@ -52,7 +51,7 @@ Bthick = 0.0011     # thickness Boron coating
 
 # start position for placing the modules in the frame, integer number
 # to multiply with 12*deg
-index_rot = 6
+index_rot = globals.index_rot
 
 tilt_theta = -10     # tilt_angle in deg
 tilt_phiS5 = 23      # inclination angle module in deg
@@ -405,29 +404,12 @@ for md in range(no_modules):
 
                 VZ[md_segt_id, wire, strip] = \
                     modZ[md] + mz[md_segt_id, wire, strip]
-                
-                # Forward detector, rotation around Y-axis by 180 deg
-                XF[md_segt_id, wire, strip] = \
-                    VX[md_segt_id, wire, strip] * fY_c + \
-                    VZ[md_segt_id, wire, strip] * fY_s
 
-                YF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
+                # Forward detector: mirror reflection of Backward % x,y plane
+                VXF[md_segt_id, wire, strip] = VX[md_segt_id, wire, strip]
+                VYF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
+                VZF[md_segt_id, wire, strip] = -VZ[md_segt_id, wire, strip]
 
-                ZF[md_segt_id, wire, strip] = \
-                    VZ[md_segt_id, wire, strip] * fY_c - \
-                    VX[md_segt_id, wire, strip] * fY_s
-
-                # # Forward detector, rotation around Z-axis by 180 deg
-                # VXF[md_segt_id, wire, strip] = \
-                #     XF[md_segt_id, wire, strip] * fZ_c - \
-                #     YF[md_segt_id, wire, strip] * fZ_s
-
-                # VYF[md_segt_id, wire, strip] = \
-                #     XF[md_segt_id, wire, strip] * fZ_s + \
-                #     YF[md_segt_id, wire, strip] * fZ_c
-
-                # VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
-                    
                 # Legend:
                 # 5 = 'SUMO5 Backward', 15 = 'SUMO5 Forward'
                 # 1 = sectors number, always 1 for SUMO5 & Forward
@@ -448,11 +430,11 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip]
                 )
 
-               # Forward EndCap, mirror reflection of backward EndCap
+               # Legend: x,y,z voxel centers
                 tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VX[md_segt_id, wire, strip],
-                    VY[md_segt_id, wire, strip],
-                    -VZ[md_segt_id, wire, strip]
+                    VXF[md_segt_id, wire, strip],
+                    VYF[md_segt_id, wire, strip],
+                    VZF[md_segt_id, wire, strip]
                 )
 
                 # Legend:
@@ -570,29 +552,12 @@ for md in range(no_modules):
 
                 VZ[md_segt_id, wire, strip] = \
                     modZ[md] + mz[md_segt_id, wire, strip]
-                
-                # Forward detector, rotation around Y-axis by 90 deg
-                XF[md_segt_id, wire, strip] = \
-                    VX[md_segt_id, wire, strip] * fY_c + \
-                    VZ[md_segt_id, wire, strip] * fY_s
 
-                YF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
+                # Forward detector: mirror reflection of Backward % x,y plane
+                VXF[md_segt_id, wire, strip] = VX[md_segt_id, wire, strip]
+                VYF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
+                VZF[md_segt_id, wire, strip] = -VZ[md_segt_id, wire, strip]
 
-                ZF[md_segt_id, wire, strip] = \
-                    VZ[md_segt_id, wire, strip] * fY_c - \
-                    VX[md_segt_id, wire, strip] * fY_s
-
-                # # Forward detector, rotation around Z-axis by 90 deg
-                # VXF[md_segt_id, wire, strip] = \
-                #     XF[md_segt_id, wire, strip] * fZ_c - \
-                #     YF[md_segt_id, wire, strip] * fZ_s
-
-                # VYF[md_segt_id, wire, strip] = \
-                #     XF[md_segt_id, wire, strip] * fZ_s + \
-                #     YF[md_segt_id, wire, strip] * fZ_c
-
-                # VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
-                    
                 # Legend:
                 # 5 = 'SUMO5 Backward', 15 = 'SUMO5 Forward'
                 # 1 = sectors number, always 1 for SUMO5
@@ -613,11 +578,11 @@ for md in range(no_modules):
                     VZ[md_segt_id, wire, strip]
                 )
 
-               # Forward EndCap, mirror reflection of backward EndCap
+               # Legend: x,y,z voxel centers
                 tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VX[md_segt_id, wire, strip],
-                    VY[md_segt_id, wire, strip],
-                    -VZ[md_segt_id, wire, strip]
+                    VXF[md_segt_id, wire, strip],
+                    VYF[md_segt_id, wire, strip],
+                    VZF[md_segt_id, wire, strip]
                 )
 
                 # Legend:

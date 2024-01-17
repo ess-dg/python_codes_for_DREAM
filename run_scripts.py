@@ -15,7 +15,6 @@ print(' ')
 print("Current date and time: ")
 print(now.strftime("%Y-%m-%d %H:%M:%S \n"))
 
-globals.initialize() 
 # print the number of EndCap sectors
 print(' ')
 print('Number of EndCap sectors considered in the calculation: ',
@@ -36,48 +35,46 @@ try:
     print(f"\nOld output file {out_file} removed.\n")
 except FileNotFoundError:
     print(f"Old file {out_file} not found. Creating it during this run.\n")
-    pass
 
 try:
     os.remove(tempF_file)
     print(f"\nOld output file {tempF_file} removed.\n")
 except FileNotFoundError:
     print(f"Old file {tempF_file} not found. Creating it during this run.\n")
-    pass
 
 try:
     os.remove(tempM_file)
     print(f"\nOld output file {tempM_file} removed.\n")
 except FileNotFoundError:
     print(f"Old file {tempM_file} not found. Creating it during this run.\n")
-    pass
 
 try:
     os.remove(tempB_file)
     print(f"\nOld output file {tempB_file} removed.\n")
 except FileNotFoundError:
     print(f"Old file {tempB_file} not found. Creating it during this run.\n")
-    pass
 
 try:
     os.remove(tempHR_file)
     print(f"\nOld output file {tempHR_file} removed.\n")
 except FileNotFoundError:
     print(f"Old file {tempHR_file} not found. Creating it during this run.\n")
-    pass
 
-#os.system(f'python DREAMMantle_calculate_voxels.py {tempM_file}')
-#print('Mantle done!\n') 
+os.system(f'python DREAMMantle_calculate_voxels.py {tempM_file}')
+print('Mantle done!\n')
 
-#os.system(f'python DREAMHR_calculate_voxels.py {tempHR_file}')
-#print('High-Resolution done!\n') 
+os.system(f'python DREAMHR_calculate_voxels.py {tempHR_file}')
+print('High-Resolution done!\n')
 
 os.system('python DREAMSUMO3_calculate_voxels.py')
 print('SUMO3 Backward & SUMO3 Forward done!\n')
+
 os.system('python DREAMSUMO4_calculate_voxels.py')
 print('SUMO4 Backward & SUMO4 Forward done!\n')
+
 os.system('python DREAMSUMO5_calculate_voxels.py')
 print('SUMO5 Backward & SUMO5 Forward done!\n')
+
 os.system('python DREAMSUMO6_calculate_voxels.py')
 print('SUMO6 Backward & SUMO6 Forward done!\n')
 
