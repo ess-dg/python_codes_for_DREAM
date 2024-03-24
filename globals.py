@@ -5,11 +5,14 @@ Created on Mon May 16 11:17:37 2022
 
 @author: irinastefanescu
 """
-
-index_rot = 17
-no_modules = 23   # no of EndCap sectors
-no_modulesM = 7 # 14  # no of Mantle modules
-
+no_modulesM =  7 # 14  # no of Mantle modules
+# Settings for endcap detectors
+index_rot = 17  # index to define first module of endcap: index_rot x 12 degrees
+no_modules = 13 # 23   # no of EndCap sectors
+bwd_keep_high = 13  # no of last module of endcap bwd to keep
+bwd_keep_low = 3  # no of first module of endcap bwd to keep
+fwd_keep_high = 10  # no of last module of endcap fwd to keep
+fwd_keep_low = 6  # no of first module of endcap bwd to keep
 
 def match2geantvars(args):
     """

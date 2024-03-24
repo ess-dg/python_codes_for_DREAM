@@ -220,14 +220,13 @@ def rotate_around_z(angle_degrees: float, vertex: np.ndarray) -> np.ndarray:
 #    4                    SUMO4, EndCap Backward
 #    5                    SUMO5, EndCap Backward
 #    6                    SUMO6, EndCap Backward
-#    7                           Mantle
-#    8                        High-Resolution
-#    9                     SANS (doesn't exist yet)
-#    13                    SUMO3, EndCap Forward
-#    14                    SUMO4, EndCap Forward
-#    15                    SUMO5, EndCap Forward
-#    16                    SUMO6, EndCap Forward  
-
+#    7                    Mantle
+#    8                    High-Resolution
+#    9                    SANS
+#    13                   SUMO3, EndCap Forward
+#    14                   SUMO4, EndCap Forward
+#    15                   SUMO5, EndCap Forward
+#    16                   SUMO6, EndCap Forward
 
 def write_to_nexus_file(
         filename: str,
@@ -364,8 +363,8 @@ def create_sector(
                 vertex = rotate_around_y(voxel_rotation[0, 0], vertex)
                 vertex = rotate_around_z(voxel_rotation[0, 1], vertex)
                 vertex = rotate_around_z(voxel_rotation[0, 2], vertex)
-            # detector_number = 8 is High-Resolution detector
-            elif detector_number[voxel] == 8:
+            # detector_number = 8 is High-Resolution detector amd 9 for SANS detector
+            elif detector_number[voxel] in [8, 9]:
                 vertex = rotate_around_z(voxel_rotation[0, 0], vertex)
                 vertex = rotate_around_x(voxel_rotation[0, 1], vertex)
                 vertex = rotate_around_y(voxel_rotation[0, 2], vertex)
@@ -430,7 +429,7 @@ def create_sector(
 
 if __name__ == "__main__":
     df = pd.read_csv(
-        "DreamAll_voxels.txt",
+        "DREAMAll_voxels.txt",
         delim_whitespace=True,
         header=None
     )

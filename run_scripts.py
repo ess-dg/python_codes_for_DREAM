@@ -28,6 +28,7 @@ tempM_file = 'Mantle_temp.txt'
 tempF_file = 'Forward_temp.txt'
 tempB_file = 'Backward_temp.txt'
 tempHR_file = 'HR_temp.txt'
+tempSANS_file = 'SANS_temp.txt'
 
 
 try:
@@ -60,11 +61,20 @@ try:
 except FileNotFoundError:
     print(f"Old file {tempHR_file} not found. Creating it during this run.\n")
 
+try:
+    os.remove(tempSANS_file)
+    print(f"\nOld output file {tempSANS_file} removed.\n")
+except FileNotFoundError:
+    print(f"Old file {tempSANS_file} not found. Creating it during this run.\n")
+
 os.system(f'python DREAMMantle_calculate_voxels.py {tempM_file}')
 print('Mantle done!\n')
 
 os.system(f'python DREAMHR_calculate_voxels.py {tempHR_file}')
 print('High-Resolution done!\n')
+
+os.system(f'python DREAMSANS_calculate_voxels.py {tempSANS_file}')
+print('SANS done!\n')
 
 os.system('python DREAMSUMO3_calculate_voxels.py')
 print('SUMO3 Backward & SUMO3 Forward done!\n')
@@ -78,5 +88,6 @@ print('SUMO5 Backward & SUMO5 Forward done!\n')
 os.system('python DREAMSUMO6_calculate_voxels.py')
 print('SUMO6 Backward & SUMO6 Forward done!\n')
 
-os.system(f'cat {tempM_file} {tempHR_file} {tempB_file} {tempF_file} > {out_file}')
-#os.system(f'cat {tempB_file} {tempF_file} > {out_file}')
+# os.system(f'cat {tempM_file} {tempHR_file} {tempB_file} {tempF_file} > {out_file}')
+os.system(f'cat {tempM_file} {tempHR_file} {tempSANS_file} {tempB_file} {tempF_file} > {out_file}')
+# os.system(f'cat {tempB_file} {tempF_file} > {out_file}')

@@ -5,14 +5,12 @@ Scripts written by Irina Stefanescu, ESS NSS Detector Group and Celine Durniak, 
 
 irina.stefanescu@ess.eu
 
-celine.durniak@ess.eu
-
 ## Description
 
 **To be completed**
 
 One Python script per detectors' part ,i.e., EndCap FORWARD (SUMO3, SUMO4, SUMO5, SUMO6), EndCap 
-BACKWARD (SUMO3, SUMO4, SUMO5, SUMO6), Mantle, High-resolution.  
+BACKWARD (SUMO3, SUMO4, SUMO5, SUMO6), Mantle, High-resolution and SANS.  
 
 File lists:
 
@@ -22,6 +20,7 @@ File lists:
 - DREAMSUMO4_calculate_voxels.py
 - DREAMSUMO5_calculate_voxels.py
 - DREAMSUMO6_calculate_voxels.py
+- DREAMSANS_calculate_voxels.py
 - dream.py
 - globals.py 
 - run_scripts.py

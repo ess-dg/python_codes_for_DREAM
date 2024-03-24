@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wednesday May 11 10:45:32 2022
+Created on Sunday, January 28, 2024
 
-@author: irinastefanescu
+@author: celinedurniak
 """
 
 import numpy as np
@@ -11,14 +11,9 @@ import numpy as np
 np.set_printoptions(precision=4)
 
 """
-*******The HR for DREAM ******
+*******The SANS for DREAM ******
 
- Uses the engineering specifications from the company CDT and
- generates the centers and dimensions of the voxels for the
- DREAM HR module.
-
-First version of this script written by Irina Stefanescu, ESS DG.
-May 2022.
+ Code adapted from implementation for High-Resolution detector
 
 data is in mm
 
@@ -26,15 +21,15 @@ data is in mm
 
 """**************User parameters *****************"""
 
-nHR = 8             # no of segments per module
-no_modulesHR = 9    # no of modules in the frame
-no_sectorsHR = 4    # no of sectors 
+nSANS = 8             # no of segments per module
+no_modulesSANS = 9    # no of modules in the frame
+no_sectorsSANS = 4    # no of sectors
 
 """***********************************************"""
 
-hHR = 170       # segment height front, sample side
-sensHR = 313    # segment depth
-wHR = 20        # segment width front, sample side
+hSANS = 170       # segment height front, sample side
+sensSANS = 313    # segment depth
+wSANS = 20        # segment width front, sample side
 
 margin = 10      # empty space inside the segment front-back and left-right
 marginb = 1.5    # empty space inside the segment top-bottom
@@ -42,28 +37,28 @@ shieldz = 25     # length of the shielding block at the back of the segment
 mod_dist = 2     # distance between neighboring segments in order to avoid overlap
 
 AlthickH = 0.3      # thickness Al cathode material and housing
-BthickHR = 0.0013   # thickness Boron coating
+BthickSANS = 0.0013   # thickness Boron coating
 
 # start position for placing the modules in the frame, integer number
 # to multiply with 12*deg
-init_angleHR = 0     # init angle in deg
+init_angleSANS = 0     # init angle in deg
 
 tilt_theta = -10     # tilt_angle in deg
-tilt_thetaHR = -1    # tilt_angle in deg
-tilt_phiHR = -1      # inclination angle module in deg
+tilt_thetaSANS = -1    # tilt_angle in deg
+tilt_phiSANS = -1      # inclination angle module in deg
 
-n_wiresHR = 16     # no of wires
-n_stripsHR = 32    # no of strips
+n_wiresSANS = 16     # no of wires
+n_stripsSANS = 32    # no of strips
 
-dist_detHR = 2500   # distance from the sample in mm
+dist_detSANS = 2500   # distance from the sample in mm
 
 # start calculations 
 
 # Al housing (box)
 
-AlyHR = (hHR + 1) / 2   # 1/2 height Al housing at entrance window HR
-AlzHR = (sensHR + margin) / 2    # depth housing HR
-AlxHR = wHR / 2   # 1/2 width segment front in HR
+AlySANS = (hSANS + 1) / 2   # 1/2 height Al housing at entrance window SANS
+AlzSANS = (sensSANS + margin) / 2    # depth housing SANS
+AlxSANS = wSANS / 2   # 1/2 width segment front in SANS
 
 """
  the next lines are for calculating the dimensions of
@@ -80,66 +75,67 @@ AlxHR = wHR / 2   # 1/2 width segment front in HR
 
 # Boron box
 
-ByHR = AlyHR - AlthickH
-BzHR = AlzHR - AlthickH
-BxHR = AlxHR - AlthickH
+BySANS = AlySANS - AlthickH
+BzSANS = AlzSANS - AlthickH
+BxSANS = AlxSANS - AlthickH
 
 # Gas volume available to the gas voxels
 
-GyHR = ByHR
-GzHR = BzHR - BthickHR
-GxHR = BxHR - BthickHR
+GySANS = BySANS
+GzSANS = BzSANS - BthickSANS
+GxSANS = BxSANS - BthickSANS
 
-CathSubstrYHR = GyHR - marginb / 2
-CathSubstrZHR = BzHR - margin / 2
+CathSubstrYSANS = GySANS - marginb / 2
+CathSubstrZSANS = BzSANS - margin / 2
 
-CathConvYHR = CathSubstrYHR
-CathConvZHR = CathSubstrZHR
-CathConvXHR = BthickHR / 2
+CathConvYSANS = CathSubstrYSANS
+CathConvZSANS = CathSubstrZSANS
+CathConvXSANS = BthickSANS / 2
 CathSubstrX1 = AlthickH / 2
 
 # calculate the dimensions of the gas voxels
 
-xxHR = GxHR - (2*CathConvXHR + AlthickH)
+xxSANS = GxSANS - (2*CathConvXSANS + AlthickH)
 
-izzHR = sensHR / n_stripsHR         # strip pitch HR in mm, all equal
+izzSANS = sensSANS / n_stripsSANS  # strip pitch SANS in mm, all equal
 
-GLzHR = izzHR / 2
-GLyHR = hHR / 2 / n_wiresHR
-GLxHR = xxHR / 2
+GLzSANS = izzSANS / 2
+GLySANS = hSANS / 2 / n_wiresSANS
+GLxSANS = xxSANS / 2
 
 # calculate the centers of the voxels 
-shp = (n_wiresHR, n_stripsHR)
+shp = (n_wiresSANS, n_stripsSANS)
 
 voxelXXhr = np.zeros(shp)
 voxelXXchr = np.zeros(shp)
 voxelYYhr = np.zeros(shp)
 voxelZZhr = np.zeros(shp)
 
-
-for strip in range(n_stripsHR):
-    for wire in range(n_wiresHR):
+for strip in range(n_stripsSANS):
+    for wire in range(n_wiresSANS):
         # fill the voxels from the top to bottom and from front to back
-        voxelYYhr[wire, strip] = (n_wiresHR - 2 * wire - 1) * GLyHR
-        voxelZZhr[wire, strip] = (n_stripsHR//2 - strip - 1) * izzHR + margin/2
+        voxelYYhr[wire, strip] = (n_wiresSANS - 2 * wire - 1) * GLySANS
+        voxelZZhr[wire, strip] = (n_stripsSANS//2 - strip - 1) * izzSANS + margin/2
         voxelXXhr[wire, strip] = AlthickH
-        voxelXXchr[wire, strip] = GLxHR + 2 * CathConvXHR + CathSubstrX1
+        voxelXXchr[wire, strip] = GLxSANS + 2 * CathConvXSANS + CathSubstrX1
 
 # calculate the segment positions in the detector frame
 
-segY = np.zeros(nHR)
-segZ = - dist_detHR - AlzHR
+segY = np.zeros(nSANS)
+
+segZ = - dist_detSANS - AlzSANS
 segX = 0
 
-for seg_no in range(nHR):
-    segY[seg_no] = 80 + (2 * AlxHR + 0.4) * (seg_no + 1)
+for seg_no in range(nSANS):
+    segY[seg_no] = 80 + (2 * AlxSANS + 0.4) * (seg_no + 1)
     
 # calculate the module positions in the detector frame
 
-pos_mod = hHR + mod_dist  # allow for 2 mm space between the modules
+pos_mod = hSANS + mod_dist  # allow for 2 mm space between the modules
 # Edit Feb 2024: to match the new design from CDT.
 # The translation along the x-axis for Sector 1 has to be reversed
-m_hrx = np.array([0, 0, 0, -pos_mod, -pos_mod, -pos_mod, -2*pos_mod, -2*pos_mod, -3*pos_mod])
+
+m_hrx = np.array([0, 0, 0, pos_mod, pos_mod, pos_mod, 2*pos_mod, 2*pos_mod, 3*pos_mod])
 
 m_hry = np.array([0, pos_mod, 2*pos_mod, 0, pos_mod, 2*pos_mod, 0, pos_mod, 0])
 
@@ -149,7 +145,7 @@ shr_angle = np.array([0, -90, 180, 90])
 
 """ calculate the lookup table  """
 
-shp = (no_sectorsHR, 100 * no_modulesHR + nHR, n_wiresHR, n_stripsHR)
+shp = (no_sectorsSANS, 100 * no_modulesSANS + nSANS, n_wiresSANS, n_stripsSANS)
 
 # voxel positions after placing the segment in the frame
 sxhr_z = np.zeros(shp)
@@ -173,21 +169,21 @@ secx = np.zeros(shp)
 secy = np.zeros(shp)
 secz = np.zeros(shp)
 
-with open('HR_temp.txt', "a") as f:
+with open('SANS_temp.txt', "a") as f:
 
     # voxels in the 'top counter'
-    for sec in range(no_sectorsHR):
+    for sec in range(no_sectorsSANS):
 
         secZ_s = np.sin(np.deg2rad(shr_angle[sec]))
         secZ_c = np.cos(np.deg2rad(shr_angle[sec]))
 
-        for md in range(no_modulesHR):
+        for md in range(no_modulesSANS):
 
-            for segment in range(nHR):
+            for segment in range(nSANS):
 
                 angZ = 90
-                angX = tilt_thetaHR
-                angY = tilt_phiHR
+                angX = tilt_thetaSANS
+                angY = tilt_phiSANS
 
                 segZ_s = np.sin(np.deg2rad(angZ))
                 segZ_c = np.cos(np.deg2rad(angZ))
@@ -198,8 +194,8 @@ with open('HR_temp.txt', "a") as f:
 
                 md_segt_id = 100 * md + segment
 
-                for strip in range(n_stripsHR):
-                    for wire in range(n_wiresHR):
+                for strip in range(n_stripsSANS):
+                    for wire in range(n_wiresSANS):
                         # rotation of each segment of the module by angZ
                         # around the Z-axis
                         sxhr_z[sec, md_segt_id, wire, strip] = -voxelYYhr[wire, strip] * segZ_s + \
@@ -258,52 +254,50 @@ with open('HR_temp.txt', "a") as f:
                             mhrz[sec, md_segt_id, wire, strip]
 
                         # Legend:
-                        # 8 = 'HR'
+                        # 9 = 'SANS'
                         # sector no, module no, segment no, wire no, strip no, counter no
                         temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                            8, sec + 1, md + 1, segment + 1, wire + 1, strip + 1, 1
+                            9, sec + 1, md + 1, segment + 1, wire + 1, strip + 1, 1
                         )
 
                         # Legend: x,y,z voxel centers
+                        # the positions are first calculated for the High Resolution
+                        # A rotation of 180 deg around Y axis is applied below
                         temp1 = '%.2f\t%.2f\t%.2f' % (
-                            secx[sec, md_segt_id, wire, strip],
+                            -secx[sec, md_segt_id, wire, strip],
                             secy[sec, md_segt_id, wire, strip],
-                            secz[sec, md_segt_id, wire, strip]
+                            -secz[sec, md_segt_id, wire, strip]
                         )
 
                         # Legend:
                         # voxel dimensions to be used to generate Nexus
                         temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
                             0,
-                            2 * GLxHR,
-                            2 * GLxHR,
-                            2 * GLyHR,
-                            2 * GLyHR,
-                            2 * GLzHR)
+                            2 * GLxSANS,
+                            2 * GLxSANS,
+                            2 * GLySANS,
+                            2 * GLySANS,
+                            2 * GLzSANS)
 
                         temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
                             angZ, -angX, -angY, shr_angle[sec], 0, 0, 0, 0, 0
                         )
                         stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
-
-                        if sec ==2 and md<=2:
-                            pass
-                        else:
-                            f.writelines(stringa)
+                        f.writelines(stringa)
 
     # voxels in the 'bottom counter'
-    for sec in range(no_sectorsHR):
+    for sec in range(no_sectorsSANS):
 
         secZ_s = np.sin(np.deg2rad(shr_angle[sec]))
         secZ_c = np.cos(np.deg2rad(shr_angle[sec]))
 
-        for md in range(no_modulesHR):
+        for md in range(no_modulesSANS):
 
-            for segment in range(nHR):
+            for segment in range(nSANS):
 
                 angZ = 90
-                angX = tilt_thetaHR
-                angY = tilt_phiHR
+                angX = tilt_thetaSANS
+                angY = tilt_phiSANS
 
                 segZ_s = np.sin(np.deg2rad(angZ))
                 segZ_c = np.cos(np.deg2rad(angZ))
@@ -314,8 +308,8 @@ with open('HR_temp.txt', "a") as f:
 
                 md_segt_id = 100 * md + segment
 
-                for strip in range(n_stripsHR):
-                    for wire in range(n_wiresHR):
+                for strip in range(n_stripsSANS):
+                    for wire in range(n_wiresSANS):
                         # rotation of each segment of the module by angZ
                         # around the Z-axis
                         sxhr_z[sec, md_segt_id, wire, strip] = \
@@ -376,36 +370,35 @@ with open('HR_temp.txt', "a") as f:
                         secz[sec, md_segt_id, wire, strip] = mhrz[sec, md_segt_id, wire, strip]
 
                         # Legend:
-                        # 8 = 'HR'
+                        # 9 = 'SANS'
                         # sector no, module no, segment no, wire no, strip no, counter no
                         temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                            8, sec + 1, md + 1, segment + 1,
+                            9, sec + 1, md + 1, segment + 1,
                             wire + 1, strip + 1, 2
                         )
 
                         # Legend: x,y,z voxel centers
+                        # the positions are first calculated for the High Resolution
+                        # A rotation of 180 deg around Y axis is applied below
                         temp1 = '%.2f\t%.2f\t%.2f' % (
-                            secx[sec, md_segt_id, wire, strip],
+                            -secx[sec, md_segt_id, wire, strip],
                             secy[sec, md_segt_id, wire, strip],
-                            secz[sec, md_segt_id, wire, strip]
+                            -secz[sec, md_segt_id, wire, strip]
                         )
 
                         # Legend:
                         # voxel dimensions to be used to generate Nexus
                         temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
                             0,
-                            2 * GLxHR,
-                            2 * GLxHR,
-                            2 * GLyHR,
-                            2 * GLyHR,
-                            2 * GLzHR)
+                            2 * GLxSANS,
+                            2 * GLxSANS,
+                            2 * GLySANS,
+                            2 * GLySANS,
+                            2 * GLzSANS)
 
                         temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
                             angZ, -angX, -angY, shr_angle[sec], 0, 0, 0, 0, 0
                         )
 
                         stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
-                        if sec == 2 and md <= 2:
-                            pass
-                        else:
-                            f.writelines(stringa)
+                        f.writelines(stringa)
