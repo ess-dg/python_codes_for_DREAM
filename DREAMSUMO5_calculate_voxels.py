@@ -257,8 +257,6 @@ modZ = np.zeros(no_modules)
 modZ[:] = offsetZ_S5
 
 for mod in range(no_modules):
-    # modX[mod] = radS5 * np.sin(np.deg2rad(-(index_rot + mod) * np.rad2deg(dphi)))
-    # modY[mod] = radS5 * np.cos(np.deg2rad(-(index_rot + mod) * np.rad2deg(dphi)))
     modX[mod] = radS5 * np.sin(-(index_rot + mod) * dphi)
     modY[mod] = radS5 * np.cos(-(index_rot + mod) * dphi)
 
@@ -312,8 +310,8 @@ mX_c = np.cos(np.deg2rad(tilt_phiS5))
 fY_s = np.sin(np.deg2rad(180))
 fY_c = np.cos(np.deg2rad(180))
 
-fZ_s = np.sin(np.deg2rad(90))
-fZ_c = np.cos(np.deg2rad(90))
+fZ_s = np.sin(np.deg2rad(180)) #90))
+fZ_c = np.cos(np.deg2rad(180)) #90))
 
 # voxels in the left counter
 
@@ -405,64 +403,96 @@ for md in range(no_modules):
                 VZ[md_segt_id, wire, strip] = \
                     modZ[md] + mz[md_segt_id, wire, strip]
 
-                # Forward detector: mirror reflection of Backward % x,y plane
-                VXF[md_segt_id, wire, strip] = VX[md_segt_id, wire, strip]
-                VYF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
-                VZF[md_segt_id, wire, strip] = -VZ[md_segt_id, wire, strip]
+                # Forward detector: 2 steps
+                # 1. Forward detector, rotation around Y-axis by 180 deg
+                XF[md_segt_id, wire, strip] = \
+                    VX[md_segt_id, wire, strip] * fY_c + \
+                    VZ[md_segt_id, wire, strip] * fY_s
 
-                # Legend:
-                # 5 = 'SUMO5 Backward', 15 = 'SUMO5 Forward'
-                # 1 = sectors number, always 1 for SUMO5 & Forward
-                #     only relevant for the HR detector
-                # module no, segment no, wire no, strip no, counter no 
-                temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    5, 1, md + 1, segment + 1, wire + 1, strip + 1, 1
-                )
+                YF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
 
-                tempF = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    15, 1, md + 1, segment + 1, wire + 1, strip + 1, 1
-                )
+                ZF[md_segt_id, wire, strip] = \
+                    VZ[md_segt_id, wire, strip] * fY_c - \
+                    VX[md_segt_id, wire, strip] * fY_s
 
-                # Legend: x,y,z voxel centers
-                temp1 = '%.2f\t%.2f\t%.2f' % (
-                    VX[md_segt_id, wire, strip],
-                    VY[md_segt_id, wire, strip],
-                    VZ[md_segt_id, wire, strip]
-                )
+                # 2. Forward detector, rotation around Z-axis by 180 deg
+                VXF[md_segt_id, wire, strip] = \
+                    XF[md_segt_id, wire, strip] * fZ_c - \
+                    YF[md_segt_id, wire, strip] * fZ_s
 
-               # Legend: x,y,z voxel centers
-                tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VXF[md_segt_id, wire, strip],
-                    VYF[md_segt_id, wire, strip],
-                    VZF[md_segt_id, wire, strip]
-                )
+                VYF[md_segt_id, wire, strip] = \
+                    XF[md_segt_id, wire, strip] * fZ_s + \
+                    YF[md_segt_id, wire, strip] * fZ_c
 
-                # Legend:
-                # voxel dimensions to be used to generate Nexus 
-                temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
-                    np.deg2rad(wire*dthetaS5)*0,
-                    GLx1bbS5[wire, strip],
-                    GLx2bbS5[wire, strip],
-                    2*GLy1S5[wire, strip],
-                    2*GLy2S5[wire, strip],
-                    2*GLzS5[wire, strip])
+                VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
 
-                # Legend:
-                # rotation angles to put the voxels into the right positions, Backward EndCap
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    -angY, angZ, -tilt_theta, tilt_phiS5, angM, 0, 0, 0, 0
-                )
+                # Data to be recorded for Endcap backward
+                if globals.bwd_keep_low - 1 <= md <= globals.bwd_keep_high - 1:
+                    # 5 = 'SUMO5 Backward'
+                    # 1 = sectors number, always 1 for SUMO5 & Forward
+                    #     only relevant for the HR detector
+                    # module no, segment no, wire no, strip no, counter no
+                    temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
+                        5, 1, md + 1, segment + 1, wire + 1, strip + 1, 1
+                    )
 
-                # rotation angles to put the voxels into the right positions, Forward EndCap
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    -angY, angZ, -tilt_theta, tilt_phiS5, angM, 180, 90, 0, 0
-                )
+                    # x,y,z voxel centers
+                    temp1 = '%.2f\t%.2f\t%.2f' % (
+                        VX[md_segt_id, wire, strip],
+                        VY[md_segt_id, wire, strip],
+                        VZ[md_segt_id, wire, strip]
+                    )
 
-                stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
-                stringaf = tempF + '\t' + tempF1 + '\t' + temp2 + '\t' + tempF3
+                    # voxel dimensions to be used to generate Nexus
+                    temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
+                        np.deg2rad(wire*dthetaS5)*0,
+                        GLx1bbS5[wire, strip],
+                        GLx2bbS5[wire, strip],
+                        2*GLy1S5[wire, strip],
+                        2*GLy2S5[wire, strip],
+                        2*GLzS5[wire, strip])
 
-                fB.writelines(stringa)
-                fF.writelines(stringaf)
+                    # rotation angles
+                    temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                        -angY, angZ, -tilt_theta, tilt_phiS5, angM, 0, 0, 0, 0
+                    )
+
+                    stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
+                    fB.writelines(stringa)
+
+                # Data to be recorded for Endcap forward
+                if globals.fwd_keep_low - 1 <= md <= globals.fwd_keep_high - 1:
+                    # 15 = 'SUMO5 Forward'
+                    # 1 = sectors number, always 1 for SUMO5 & Forward
+                    #     only relevant for the HR detector
+                    # module no, segment no, wire no, strip no, counter no
+                    tempF = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
+                        15, 1, md + 1, segment + 1, wire + 1, strip + 1, 1
+                    )
+
+                    # x,y,z voxel centers
+                    tempF1 = '%.2f\t%.2f\t%.2f' % (
+                        VXF[md_segt_id, wire, strip],
+                        VYF[md_segt_id, wire, strip],
+                        VZF[md_segt_id, wire, strip]
+                    )
+
+                    # voxel dimensions to be used to generate Nexus
+                    tempF2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
+                        np.deg2rad(wire * dthetaS5) * 0,
+                        GLx1bbS5[wire, strip],
+                        GLx2bbS5[wire, strip],
+                        2 * GLy1S5[wire, strip],
+                        2 * GLy2S5[wire, strip],
+                        2 * GLzS5[wire, strip])
+
+                    # rotation angles
+                    tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                        -angY, angZ, -tilt_theta, tilt_phiS5, angM, 180, 180, 0, 0
+                    )
+
+                    stringaf = tempF + '\t' + tempF1 + '\t' + tempF2 + '\t' + tempF3
+                    fF.writelines(stringaf)
 
 # voxels in the right counter
 
@@ -553,65 +583,98 @@ for md in range(no_modules):
                 VZ[md_segt_id, wire, strip] = \
                     modZ[md] + mz[md_segt_id, wire, strip]
 
-                # Forward detector: mirror reflection of Backward % x,y plane
-                VXF[md_segt_id, wire, strip] = VX[md_segt_id, wire, strip]
-                VYF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
-                VZF[md_segt_id, wire, strip] = -VZ[md_segt_id, wire, strip]
+                # Forward detector: 2 steps
+                # 1. Forward detector, rotation around Y-axis by 180 deg
+                XF[md_segt_id, wire, strip] = \
+                    VX[md_segt_id, wire, strip] * fY_c + \
+                    VZ[md_segt_id, wire, strip] * fY_s
 
-                # Legend:
-                # 5 = 'SUMO5 Backward', 15 = 'SUMO5 Forward'
-                # 1 = sectors number, always 1 for SUMO5
-                #     only relevant for the HR detector
-                # module no, segment no, wire no, strip no, counter no 
-                temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    5, 1, md + 1, segment + 1, wire + 1, strip + 1, 2
-                )
+                YF[md_segt_id, wire, strip] = VY[md_segt_id, wire, strip]
 
-                tempF = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
-                    15, 1, md + 1, segment + 1, wire + 1, strip + 1, 2
-                )
+                ZF[md_segt_id, wire, strip] = \
+                    VZ[md_segt_id, wire, strip] * fY_c - \
+                    VX[md_segt_id, wire, strip] * fY_s
 
-                # Legend: x,y,z voxel centers
-                temp1 = '%.2f\t%.2f\t%.2f' % (
-                    VX[md_segt_id, wire, strip],
-                    VY[md_segt_id, wire, strip],
-                    VZ[md_segt_id, wire, strip]
-                )
+                # 2. Forward detector, rotation around Z-axis by 180 deg
+                VXF[md_segt_id, wire, strip] = \
+                    XF[md_segt_id, wire, strip] * fZ_c - \
+                    YF[md_segt_id, wire, strip] * fZ_s
 
-               # Legend: x,y,z voxel centers
-                tempF1 = '%.2f\t%.2f\t%.2f' % (
-                    VXF[md_segt_id, wire, strip],
-                    VYF[md_segt_id, wire, strip],
-                    VZF[md_segt_id, wire, strip]
-                )
+                VYF[md_segt_id, wire, strip] = \
+                    XF[md_segt_id, wire, strip] * fZ_s + \
+                    YF[md_segt_id, wire, strip] * fZ_c
 
-                # Legend:
-                # voxel dimensions to be used to generate Nexus 
-                temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
-                    -np.deg2rad(wire * dthetaS5)*0,
-                    GLx1bbS5[wire, strip],
-                    GLx2bbS5[wire, strip],
-                    2 * GLy1S5[wire, strip],
-                    2 * GLy2S5[wire, strip],
-                    2 * GLzS5[wire, strip]
-                )
+                VZF[md_segt_id, wire, strip] = ZF[md_segt_id, wire, strip]
 
-                # Legend:
-                # rotation angles to put the voxels into the right positions, Backward EndCap
-                temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    -angY, angZ, -tilt_theta, tilt_phiS5, angM, 0, 0, 0, 0
-                )
+                # Data to be recorded for Endcap backward
+                if globals.bwd_keep_low - 1 <= md <= globals.bwd_keep_high - 1:
+                    # 5 = 'SUMO5 Backward'
+                    # 1 = sectors number, always 1 for SUMO5
+                    #     only relevant for the HR detector
+                    # module no, segment no, wire no, strip no, counter no
+                    temp = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
+                        5, 1, md + 1, segment + 1, wire + 1, strip + 1, 2
+                    )
 
-                # rotation angles to put the voxels into the right positions, Forward EndCap
-                tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
-                    -angY, angZ, -tilt_theta, tilt_phiS5, angM, 180, 90, 0, 0
-                )
+                    # x,y,z voxel centers
+                    temp1 = '%.2f\t%.2f\t%.2f' % (
+                        VX[md_segt_id, wire, strip],
+                        VY[md_segt_id, wire, strip],
+                        VZ[md_segt_id, wire, strip]
+                    )
 
-                stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
-                stringaf = tempF + '\t' + tempF1 + '\t' + temp2 + '\t' + tempF3
+                    # voxel dimensions to be used to generate Nexus
+                    temp2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
+                        -np.deg2rad(wire * dthetaS5)*0,
+                        GLx1bbS5[wire, strip],
+                        GLx2bbS5[wire, strip],
+                        2 * GLy1S5[wire, strip],
+                        2 * GLy2S5[wire, strip],
+                        2 * GLzS5[wire, strip]
+                    )
 
-                fB.writelines(stringa)
-                fF.writelines(stringaf)
+                    # rotation angles
+                    temp3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                        -angY, angZ, -tilt_theta, tilt_phiS5, angM, 0, 0, 0, 0
+                    )
+
+                    stringa = temp + '\t' + temp1 + '\t' + temp2 + '\t' + temp3
+                    fB.writelines(stringa)
+
+                # Data to be recorded for Endcap forward
+                if globals.fwd_keep_low - 1 <= md <= globals.fwd_keep_high - 1:
+                    # 15 = 'SUMO5 Forward'
+                    # 1 = sectors number, always 1 for SUMO5
+                    #     only relevant for the HR detector
+                    # module no, segment no, wire no, strip no, counter no
+                    tempF = '%d\t%d\t%d\t%d\t%d\t%d\t%d' % (
+                        15, 1, md + 1, segment + 1, wire + 1, strip + 1, 2
+                    )
+
+                    # x,y,z voxel centers
+                    tempF1 = '%.2f\t%.2f\t%.2f' % (
+                        VXF[md_segt_id, wire, strip],
+                        VYF[md_segt_id, wire, strip],
+                        VZF[md_segt_id, wire, strip]
+                    )
+
+                    # voxel dimensions to be used to generate Nexus
+                    tempF2 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f' % (
+                        -np.deg2rad(wire * dthetaS5) * 0,
+                        GLx1bbS5[wire, strip],
+                        GLx2bbS5[wire, strip],
+                        2 * GLy1S5[wire, strip],
+                        2 * GLy2S5[wire, strip],
+                        2 * GLzS5[wire, strip]
+                    )
+
+                    # rotation angles
+                    tempF3 = '%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n' % (
+                        -angY, angZ, -tilt_theta, tilt_phiS5, angM, 180, 180, 0, 0
+                    )
+
+                    stringaf = tempF + '\t' + tempF1 + '\t' + tempF2 + '\t' + tempF3
+                    fF.writelines(stringaf)
 
 fB.close()
 fF.close()
